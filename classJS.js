@@ -1,19 +1,19 @@
 class User {
-    constructor(name = "Ingrese nombre", lastName = "Ingrese Apellido"){
+    constructor(name = "", lastName = "", books = [], pets = [] ) {
         this.name = name
         this.lastName = lastName
-        this.books = []
-        this.pets = []
+        this.books = books
+        this.pets = pets
     }
 
     getFullName = () =>{
-        console.log(`El usuario es: ${this.name} ${this.lastName}`)
-    }
-    addPet = (petName) =>{
+        return `El usuario es: ${this.name} ${this.lastName}`
+    } 
+    addPet = (petName = "") =>{
         this.pets.push(petName)
     }
     getPets = () =>{
-        console.log(this.pets.length)
+        return this.pets.length
     }
     addBook = (bookName, author) =>{
         this.books.push({
@@ -22,11 +22,11 @@ class User {
         })
     }
     getBookNames = () =>{
-        console.log(this.books.map(book => ({...book}))) 
+        return this.books.map(book => book.name)
     }
 }
 
-let firstUser = new User("Diego Armando", "Maradona")
+const firstUser = new User("Diego Armando", "Maradona", [{name: "El Señor de los Anillos", author: "J.R.R Tolkien"}], ["Perro", "Gato"])
 
 firstUser.getFullName()
 
@@ -38,8 +38,6 @@ firstUser.getPets()
 
 firstUser.addBook("El principito", "Antoine de Saint-Exupéry")
 firstUser.getBookNames()
-
-console.log(firstUser)
 
 
 
