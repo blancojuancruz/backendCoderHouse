@@ -15,35 +15,18 @@ class Container {
     }
   }
 
-  save = (object) => {
-    try {
-      this.id++
-      object.id = this.id
-      this.products.push(object)
-      this.writeFiles()
+  save = (product) => {
+    this.id++
+    product.id = this.id
+    this.products.push(product)
+    this.writeFiles()
 
-      return this.id
-    } catch (err) {
-      console.log(`${err}: El objeto no pudo ser guardado correctamente`)
-    }
+    return this.id
   }
 
   getById = (id) => {
-    try {
-      let result
-      if (this.products !== []) {
-        result = this.products.find(product => product.id === id)
-        if (result === undefined) {
-          result = null
-        }
-      } else {
-        result = this.id
-      }
-
-      return result
-    } catch (err) {
-      console.log(`${err}: No se encontro el Id solicitado`)
-    }
+    const product = this.products.find(product => product.id === id)
+    return product || 'Not found'
   }
 
   getAll = () => {
@@ -89,6 +72,16 @@ class Container {
       })
     } catch (err) {
       console.log(`${err}: No products in the DataBase`)
+    }
+  }
+
+  updateProduct = (id, product) => {
+    const editProduct = this.products.map(product => product.id).indexOf(id)
+
+    if (editProduct !== -1) {
+      this.products[editProduct].title = product.title
+      this.products[editProduct].price = product.price
+      this.products[editProduct].thumbnail = product.thumbnail
     }
   }
 }
