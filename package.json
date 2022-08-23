@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ejs": "nodemon ejs.js",
+    "hbs": "nodemon hbs.js",
+    "pug": "nodemon pug.js"
   },
   "repository": {
     "type": "git",
@@ -18,10 +21,15 @@
   },
   "homepage": "https://github.com/blancojuancruz/backendCoderHouse#readme",
   "devDependencies": {
-    "nodemon": "^2.0.19"
+    "eslint": "^8.22.0",
+    "nodemon": "^2.0.19",
+    "standard": "^17.0.0"
   },
   "dependencies": {
-    "express": "^4.18.1"
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6",
+    "pug": "^3.0.2"
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json"
