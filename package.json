@@ -1,14 +1,10 @@
 {
   "name": "backendcoderhouse",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "ejs": "nodemon ejs.js",
-    "hbs": "nodemon hbs.js",
-    "pug": "nodemon pug.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -29,9 +25,12 @@
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "socket.io": "^4.5.1"
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }
