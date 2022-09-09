@@ -1,0 +1,25 @@
+<h2 class="text-danger">Products List</h1>
+  {{#if showList }}
+<table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Product ID</th>
+            <th scope="col">Product Title</th>
+            <th scope="col">Product Price</th>
+            <th scope="col">Product Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each list}}
+              <tr>
+                  <th scope="row">{{this.id}}</th>
+                  <td>{{this.title}}</td>
+                  <td>${{this.price}}</td>
+                  <td><img style="height: 3rem;" src="{{this.thumbnail}}" alt=""></td>
+                </tr>
+          {{/each}}
+        </tbody>
+      </table>
+  {{else}}
+    <h5 class="alert-danger rounded p-2">No data available</h5>
+{{/if}}
