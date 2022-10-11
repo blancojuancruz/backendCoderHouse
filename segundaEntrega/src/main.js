@@ -6,6 +6,16 @@ const { Router } = express
 
 const app = express()
 
+const productsRouter = new Router()
+const cartRouter = new Router()
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static('./views'))
+
+app.use('/api/products', productsRouter)
+app.use('/api/cart', cartRouter)
+
 const isAdmin = true
 
 const isAdminFalse = (path, method) => {
@@ -26,33 +36,33 @@ const isAutenticated = (request, response, next) => {
   else next()
 }
 
-const productsRouter = new Router()
-const cartRouter = new Router()
-
 productsRouter.get('/', async (request, response) => {
   const prods = await daoProducts.getAll()
 
   response.json(prods)
 })
 
-productsRouter.get('/:id', async (request, response) => {
-  const id = request.params.id
-
-  response.json(await daoProducts.getById(id))
+productsRouter.get('/', async (request, response) => {
+  if (Object.entries(request.query).length > 0) {
+    const id = request.query.id
+    response.json(await daoProducts.getById(id))
+  } else {
+    response.json(await daoProducts.getAll())
+  }
 })
 
 productsRouter.post('/', isAutenticated, async (request, response) => {
-  const postProduct = request.body
-  const timestamp = Date.now()
+  const body = request.body
 
-  response.json({ id: await daoProducts.save({ timestamp, postProduct }) })
+  response.json(await daoProducts.save(body))
 })
 
 productsRouter.put('/:id', isAutenticated, async (request, response) => {
   const id = request.params.id
   const body = request.body
+  await daoProducts.update(body, id)
 
-  response.json(await daoProducts.update(body, id))
+  response.json(await daoProducts.getById(id))
 })
 
 productsRouter.delete('/:id', isAutenticated, async (request, response) => {
@@ -107,13 +117,6 @@ cartRouter.delete('/:id/products/:idProd', async (request, response) => {
 
   response.end()
 })
-
-app.use(express.json)
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
-
-app.use('/api/products', productsRouter)
-app.use('/api/products', cartRouter)
 
 const PORT = 8080
 app.listen(PORT, () => {

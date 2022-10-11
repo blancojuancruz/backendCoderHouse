@@ -15,9 +15,10 @@ class FirebaseContainer {
 
   async getById (id) {
     try {
-      const doc = this.coll.doc(`${id}`)
+      const doc = this.collection.doc(id)
       const item = await doc.get()
       const res = item.data()
+
       return res
     } catch (err) {
       console.log(err)
@@ -27,7 +28,7 @@ class FirebaseContainer {
   async getAll () {
     try {
       const result = []
-      const snapshot = await this.coleccion.get()
+      const snapshot = await this.collection.get()
       snapshot.forEach((doc) => {
         const data = doc.data()
         result.push({ ...data, id: doc.id })
@@ -35,13 +36,14 @@ class FirebaseContainer {
 
       return result
     } catch (error) {
+      console.log(error)
       throw new Error(`Error al obtener los documentos: ${error}`)
     }
   }
 
   async save (data) {
     try {
-      const doc = await this.coleccion.add(data)
+      const doc = await this.collection.add(data)
 
       return { ...data, id: doc.id }
     } catch (error) {
@@ -49,13 +51,14 @@ class FirebaseContainer {
     }
   }
 
-  async update (newItem) {
-    try {
-      const updateItem = await this.coleccion
-        .doc(newItem.id)
-        .set(newItem)
+  async update (element, id) {
+    const { title, price, thumbnail } = element
+    const timestamp = Date.now()
 
-      return updateItem
+    try {
+      const doc = this.collection.doc(id)
+
+      await doc.set({ title, price, thumbnail, timestamp })
     } catch (error) {
       throw new Error(`Error al actualizar el documento: ${error}`)
     }
@@ -63,7 +66,7 @@ class FirebaseContainer {
 
   async delete (id) {
     try {
-      const item = await this.coleccion.doc(id).delete()
+      const item = await this.collection.doc(id).delete()
 
       return item
     } catch (error) {
@@ -73,7 +76,7 @@ class FirebaseContainer {
 
   async deleteById () {
     try {
-      const snapshot = await this.coleccion.get()
+      const snapshot = await this.collection.get()
       snapshot.forEach((doc) => {
         doc.ref.delete()
       })

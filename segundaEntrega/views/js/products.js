@@ -1,7 +1,8 @@
 const productsApi = {
-  get: () => {
-    return fetch('/api/products')
-      .then(data => data.json())
+  get: async () => {
+    const data = await fetch('/api/products')
+
+    return await data.json()
   },
   post: (newProd) => {
     const options = {
@@ -14,7 +15,7 @@ const productsApi = {
 
     return fetch('/api/products', options)
   },
-  put: (idProd, newProd) => {
+  put: async (idProd, newProd) => {
     const options = {
       method: 'PUT',
       body: JSON.stringify(newProd),
@@ -22,9 +23,10 @@ const productsApi = {
         'Content-Type': 'application/json'
       }
     }
+
     return fetch(`/api/products/${idProd}`, options)
   },
-  delete: (idProd) => {
+  delete: async (idProd) => {
     const options = {
       method: 'DELETE'
     }
