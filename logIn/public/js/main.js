@@ -44,7 +44,7 @@ const post = new schema.Entity('posts', {
 
 const inputUsername = document.getElementById('inputUsername')
 const inputMessage = document.getElementById('inputMessage')
-// const btnSend = document.getElementById('btnSend')
+const btnSend = document.getElementById('btnSend')
 
 const formPostMessage = document.getElementById('formPostMessage')
 formPostMessage.addEventListener('submit', (e) => {
@@ -106,14 +106,14 @@ const makeHtmlList = (messages) => {
     .join('')
 }
 
-// inputUsername.addEventListener('input', () => {
-//   const existEmail = inputUsername.value.length
-//   const existText = inputMessage.value.length
-//   inputMessage.disabled = !existEmail
-//   btnSend.disabled = !existEmail || !existText
-// })
+inputUsername.addEventListener('input', () => {
+  const existEmail = inputUsername.value.length
+  const existText = inputMessage.value.length
+  inputMessage.disabled = !existEmail
+  btnSend.disabled = !existEmail || !existText
+})
 
-// inputMessage.addEventListener('input', () => {
-//   const existText = inputMessage.value.length
-//   btnSend.disabled = !existText
-// })
+inputMessage.addEventListener('input', () => {
+  const existText = inputMessage.value.length
+  btnSend.disabled = !existText
+})
